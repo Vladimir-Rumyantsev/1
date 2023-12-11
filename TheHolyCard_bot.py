@@ -153,4 +153,4 @@ dict2 = {
     4: 'Ты сегодня мило выглядишь ❤'
        '\nУ тебя всё получится шикарно. Карты верят в тебя'
 }
-telegram_bot('6425705097:AAG73GAB4yDrBBKrkvbcXNhk2SoolCBUf7E')
+telegram_bot('...')
