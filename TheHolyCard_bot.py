@@ -126,7 +126,7 @@ def telegram_bot(token):
             else:
                 st = str(message.text)
                 try:
-                    recipient_id, text = st.split("\n9092\n", 1)     # Пароль для отправки сообщения разработчиком пользователю
+                    recipient_id, text = st.split("\n1234\n", 1)    # "\n1234\n" —> Пароль для отправки сообщения разработчиком пользователю. ❗ Необходимо заменить
                     bot.send_message(
                         recipient_id,
                         f'Вам сообщение от моего разработчика:\n\n{text}'
@@ -189,4 +189,4 @@ dict2 = {
        '\nУ тебя всё получится шикарно. Карты верят в тебя'
 }
 print('Start')
-telegram_bot('token')
+telegram_bot('token')    # ❗ token необходимо заменить
