@@ -126,7 +126,7 @@ def telegram_bot(token):
             else:
                 st = str(message.text)
                 try:
-                    recipient_id, text = st.split(", ", 1)
+                    recipient_id, text = st.split("\n9092\n", 1)     # Пароль для отправки сообщения разработчиком пользователю
                     bot.send_message(
                         recipient_id,
                         f'Вам сообщение от моего разработчика:\n\n{text}'
