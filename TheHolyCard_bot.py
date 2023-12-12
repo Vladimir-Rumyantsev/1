@@ -14,9 +14,14 @@ def telegram_bot(token):
                 f'{dict[a]}'
             )
             bot.send_message(
-                947467861,
-                f'Была команда /{a} от: {person}'
+                razrab,
+                f'Была команда /{a} от:'
             )
+            bot.send_message(
+                razrab,
+                f'{person}'
+            )
+
 
         try:
             person = message.chat.id
@@ -60,8 +65,12 @@ def telegram_bot(token):
                     f'🔮'
                 )
                 bot.send_message(
-                    947467861,
-                    f'Была команда /start от: {person}'
+                    razrab,
+                    f'Была команда /start от:'
+                )
+                bot.send_message(
+                    razrab,
+                    f'{person}'
                 )
 
             elif message.text.lower() == '/card':
@@ -71,9 +80,14 @@ def telegram_bot(token):
                     f"Выпала карта: {dict[card_random]}"
                 )
                 bot.send_message(
-                    947467861,
-                    f'Была команда /card от: {person}'
+                    razrab,
+                    f'Была команда /card от:'
                 )
+                bot.send_message(
+                    razrab,
+                    f'{person}'
+                )
+
 
             elif message.text.lower() == '/exam':
                 exam_random = random.randint(1, 100)
@@ -89,8 +103,12 @@ def telegram_bot(token):
                     f'\n{dict2[a]}'
                 )
                 bot.send_message(
-                    947467861,
-                    f'Была команда /exam от: {person}'
+                    razrab,
+                    f'Была команда /exam от:'
+                )
+                bot.send_message(
+                    razrab,
+                    f'{person}'
                 )
 
             elif message.text.lower() == '/the_fool':
@@ -126,11 +144,16 @@ def telegram_bot(token):
             else:
                 st = str(message.text)
                 try:
-                    recipient_id, text = st.split("\n1234\n", 1)    # "\n1234\n" —> Пароль для отправки сообщения разработчиком пользователю. ❗ Необходимо заменить
-                    bot.send_message(
-                        recipient_id,
-                        f'Вам сообщение от моего разработчика:\n\n{text}'
-                    )
+                    if person == razrab:
+                        recipient_id, text = st.split("\n", 1)
+                        bot.send_message(
+                            recipient_id,
+                            f'Вам сообщение от моего разработчика...'
+                        )
+                        bot.send_message(
+                            recipient_id,
+                            f'{text}'
+                        )
                 except:
                     bot.send_message(
                         person,
@@ -139,15 +162,15 @@ def telegram_bot(token):
                         'когда у него будет возможность — он ответит здесь от моего лица.'
                     )
                     bot.send_message(
-                        947467861,
+                        razrab,
                         f'❗'
                     )
                     bot.send_message(
-                        947467861,
+                        razrab,
                         f'{person}'
                     )
                     bot.send_message(
-                        947467861,
+                        razrab,
                         f'{st}'
                     )
         except Exception as ex:
@@ -189,4 +212,5 @@ dict2 = {
        '\nУ тебя всё получится шикарно. Карты верят в тебя'
 }
 print('Start')
+razrab = ...      # ❗ ID Владельца бота
 telegram_bot('token')    # ❗ token необходимо заменить
