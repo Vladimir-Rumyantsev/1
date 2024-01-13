@@ -304,6 +304,5 @@ while True:
     try:
         print('Start')
         telegram_bot('token')
-        print('Stop')
     except:
         print('Not internet connection!')
