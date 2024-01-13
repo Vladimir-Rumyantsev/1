@@ -24,14 +24,6 @@ def telegram_bot(token):
                     f'and improve the peace in our region.\nUse the buttons below to select the language in which you '
                     f'prefer to receive messages from me', reply_markup=language
                 )
-                bot.send_message(
-                    razrab,
-                    f'Была команда /start от:'
-                )
-                bot.send_message(
-                    razrab,
-                    f'{person}'
-                )
 
             elif message.text.lower() == '🇬🇧 english':
                 bot.send_message(
@@ -83,7 +75,7 @@ def telegram_bot(token):
             elif message.text.lower() == 'соликамск':
                 bot.send_message(
                     person,
-                    f'В Соликамске раздельно сдать мусор можно только по адресу - Юбилейный просп., 10\n\n'
+                    f'В Соликамске раздельно сдать мусор можно только по адресу:\n• Юбилейный просп., 10\n\n'
                     f'А батарейки по адресам:\n'
                     f'• ул. Урицкого,42, в будни в рабочее время в ДЭБЦ\n'
                     f'• ул. 20-лет Победы, 121, 3 этаж, в отдел по экологии\n'
@@ -93,7 +85,7 @@ def telegram_bot(token):
             elif message.text.lower() == 'чайковский':
                 bot.send_message(
                     person,
-                    f'В Чайковском раздельно сдать мусор можно только по адресу - ул. Азина, 11\n\n'
+                    f'В Чайковском раздельно сдать мусор можно только по адресу:\n• ул. Азина, 11\n\n'
                     f'А батарейки по адресам:\n'
                     f'• ул. Промышленная 4\n'
                     f'• ул. Советская, 1/13'
@@ -102,7 +94,7 @@ def telegram_bot(token):
             elif message.text.lower() == 'кунгур':
                 bot.send_message(
                     person,
-                    f'В Кунгуре раздельно сдать мусор можно только по адресу - ул. Нефтяников, 2\n\n'
+                    f'В Кунгуре раздельно сдать мусор можно только по адресу:\n• ул. Нефтяников, 2\n\n'
                     f'А батарейки по адресам:\n'
                     f'• ул. Пролетарская, 112А\n'
                     f'• ул. Полетаевская ул., 26'
@@ -144,7 +136,7 @@ def telegram_bot(token):
             elif message.text.lower() == 'чусовой':
                 bot.send_message(
                     person,
-                    f'В Чусовом раздельно сдать мусор можно только по адресу - ул. Чайковского, 23\n\n'
+                    f'В Чусовом раздельно сдать мусор можно только по адресу:\n• ул. Чайковского, 23\n\n'
                     f'А батарейки по адресам:\n'
                     f'• ул. Юности, 1\n'
                     f'• ул. Южная, 7'
@@ -186,8 +178,8 @@ def telegram_bot(token):
             elif message.text.lower() == 'solikamsk':
                 bot.send_message(
                     person,
-                    f'In Solikamsk, it is possible to hand over garbage separately only at the address - '
-                    f'10 Jubilee Ave.\n\n'
+                    f'In Solikamsk, it is possible to hand over garbage separately only at the address:\n'
+                    f'• 10 Jubilee Ave.\n\n'
                     f'And the batteries are at the addresses:\n'
                     f'• 42 Uritskogo str., on weekdays during business hours\n'
                     f'• 121, 20th Anniversary of Victory str., 3rd floor, to the Department of Ecology\n'
@@ -197,8 +189,8 @@ def telegram_bot(token):
             elif message.text.lower() == 'chaikovsky':
                 bot.send_message(
                     person,
-                    f'In Chaikovsky, it is possible to hand over garbage separately only at the address - '
-                    f'11 Azina str.\n\n'
+                    f'In Chaikovsky, it is possible to hand over garbage separately only at the address:\n'
+                    f'• 11 Azina str.\n\n'
                     f'And the batteries are at the addresses:\n'
                     f'• 4 Promyshlennaya str.\n'
                     f'• 1/13 Sovetskaya str.'
@@ -207,8 +199,8 @@ def telegram_bot(token):
             elif message.text.lower() == 'kungur':
                 bot.send_message(
                     person,
-                    f'In Kungur, it is possible to hand over garbage separately only at the address - '
-                    f'2 Neftyanikov str.\n\n'
+                    f'In Kungur, it is possible to hand over garbage separately only at the address:\n'
+                    f'• 2 Neftyanikov str.\n\n'
                     f'And the batteries are at the addresses:\n'
                     f'• 112A Proletarskaya str.\n'
                     f'• 26 Poletaevskaya str.'
@@ -250,8 +242,8 @@ def telegram_bot(token):
             elif message.text.lower() == 'chusovoy':
                 bot.send_message(
                     person,
-                    f'In Chusovoye, you can hand over garbage separately only at the address - '
-                    f'23 Tchaikovsky str.\n\n'
+                    f'In Chusovoye, you can hand over garbage separately only at the address:\n'
+                    f'• 23 Tchaikovsky str.\n\n'
                     f'And the batteries are at the addresses:\n'
                     f'• 1 Yunosti str.\n'
                     f'• 7 Yuzhnaya str.'
@@ -272,26 +264,12 @@ def telegram_bot(token):
                     f'and improve the peace in our region.\nUse the buttons below to select the language in which you '
                     f'prefer to receive messages from me', reply_markup=language
                 )
-                bot.send_message(
-                    razrab,
-                    f'Неизвестное мне сообщение от:'
-                )
-                bot.send_message(
-                    razrab,
-                    f'{person}'
-                )
-                bot.send_message(
-                    razrab,
-                    f'{message.text}'
-                )
 
         except Exception as ex:
             print(ex)
 
     bot.polling()
 
-
-razrab = 'id'
 
 language = types.ReplyKeyboardMarkup(resize_keyboard=True)
 Eng = types.KeyboardButton('🇬🇧 English')
@@ -328,4 +306,4 @@ while True:
         telegram_bot('token')
         print('Stop')
     except:
-        print('Нет инета!')
+        print('Not internet connection!')
