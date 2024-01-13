@@ -291,7 +291,7 @@ def telegram_bot(token):
     bot.polling()
 
 
-razrab = 947467861
+razrab = 'id'
 
 language = types.ReplyKeyboardMarkup(resize_keyboard=True)
 Eng = types.KeyboardButton('🇬🇧 English')
@@ -325,7 +325,7 @@ markup_en.add(Perm_en, Berezniki_en, Solikamsk_en, Chaikovsky_en, Kungur_en, Lys
 while True:
     try:
         print('Start')
-        telegram_bot('6783575727:AAEopqzWZHr4BfrCnYUB979TNJgrs8xtc3s')
+        telegram_bot('token')
         print('Stop')
     except:
         print('Нет инета!')
