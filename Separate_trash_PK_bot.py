@@ -29,14 +29,59 @@ def telegram_bot(token):
                 bot.send_message(
                     person,
                     f"Okay, I'll use English to communicate with you\n\nTo find out the information you are "
-                    f"interested in about your city, use the buttons below", reply_markup=markup_en
+                    f"interested in about your city, use the buttons below. And the central button will tell you "
+                    f"about the important to sort your rubbish and recycle batteries", reply_markup=markup_en
                 )
 
             elif message.text.lower() == '🇷🇺 русский':
                 bot.send_message(
                     person,
                     f'Хорошо, я буду использовать русский язык для общения с тобой\n\nЧтобы узнать '
-                    f'интересующую информацию о твоём городе - воспользуйся кнопками ниже', reply_markup=markup_ru
+                    f'интересующую информацию о твоём городе - воспользуйся кнопками ниже. А центральная кнопка '
+                    f'расскажет тебе о важности сортировки мусора и правильной утилизации батареек',
+                    reply_markup=markup_ru
+                )
+
+            elif message.text.lower() == 'о важности сортировки':
+                bot.send_message(
+                    person,
+                    f'Почему важно сортировать мусор?\nРаздельный сбор отходов позволяет решить сразу несколько '
+                    f'проблем. Во-первых, благодаря этому меньше мусора захоранивают на полигонах. Старые свалки '
+                    f'растут медленнее, новые открываются реже. Кроме того, разлагаясь под открытым небом на '
+                    f'полигонах, вещи могут выделять ядовитые вещества в атмосферу, грунт или воду. Чем больше '
+                    f'отходов перерабатывается, тем меньше подобных вредных выбросов.\nВторой аргумент в пользу '
+                    f'раздельного сбора — возможность сократить потребление природных ресурсов за счет вторсырья. '
+                    f'До половины (а иногда и больше) мусора составляют перерабатываемые отходы. Огромный объем '
+                    f'материалов можно и нужно использовать повторно. Например, изготавливая бумагу из макулатуры, '
+                    f'мы спасаем от вырубки деревья, которые идут на производство целлюлозы с нуля.\n\n'
+                    f'Почему важно сдавать батарейки?\nОтработанные батарейки трансформируются в опасные токсичные '
+                    f'отходы. Вещества, которые в них содержатся, отравляют землю, воду и воздух. Одна брошенная на '
+                    f'землю батарейка – это химическое загрязнение до 20 м² почвы. А если она попадет в огонь, то '
+                    f'выделяются еще более токсичные вещества, опасные для людей. Всего этого удастся избежать, если '
+                    f'утилизировать элементы питания правильно. Так же в ходе утилизации извлекают цветные металлы и '
+                    f'другие вещества, у которых нет никаких отличий от тех, что добываются из природных '
+                    f'месторождений.', reply_markup=markup_ru
+                )
+
+            elif message.text.lower() == 'the importance of sorting':
+                bot.send_message(
+                    person,
+                    f'Why is it so important to sort your rubbish?\nSeparate waste collection solves several '
+                    f'problems at once. Firstly, thanks to it, less rubbish is buried in landfills. Old landfills '
+                    f'grow slower and new ones are opened less often. In addition, decomposing in the open air in '
+                    f'landfills, things can release toxic substances into the atmosphere, soil or water. The more '
+                    f'waste is recycled, the less such harmful emissions.\nThe second argument in favour of separate '
+                    f'collection is the possibility to reduce the consumption of natural resources through recycled '
+                    f'materials. Up to half (and sometimes more) of rubbish is recyclable waste. A huge amount of '
+                    f'materials can and should be reused. For example, by making paper from waste paper, we save trees '
+                    f'from being cut down, which are used for pulp production from scratch.\n\n'
+                    f'Why is it important to recycle batteries?\nUsed batteries become hazardous toxic waste. The '
+                    f'substances they contain poison the land, water and air. One battery thrown on the ground is a '
+                    f'chemical contamination of up to 20 m² of soil. And if it gets into a fire, it releases even more '
+                    f'toxic substances that are dangerous for people. All this can be avoided if the batteries are '
+                    f'disposed of correctly. Non-ferrous metals and other substances are also recovered during '
+                    f'disposal, which are no different from those extracted from natural deposits.',
+                    reply_markup=markup_en
                 )
 
             elif message.text.lower() == 'пермь':
@@ -277,6 +322,7 @@ Rus = types.KeyboardButton('🇷🇺 Русский')
 language.add(Eng, Rus)
 
 markup_ru = types.ReplyKeyboardMarkup(resize_keyboard=True)
+Ru_why = types.KeyboardButton('О важности сортировки')
 Perm_ru = types.KeyboardButton('Пермь')
 Berezniki_ru = types.KeyboardButton('Березники')
 Solikamsk_ru = types.KeyboardButton('Соликамск')
@@ -285,10 +331,11 @@ Kungur_ru = types.KeyboardButton('Кунгур')
 Lysva_ru = types.KeyboardButton('Лысьва')
 Krasnokamsk_ru = types.KeyboardButton('Краснокамск')
 Chusovoy_ru = types.KeyboardButton('Чусовой')
-markup_ru.add(Perm_ru, Berezniki_ru, Solikamsk_ru, Chaikovsky_ru, Kungur_ru, Lysva_ru, Krasnokamsk_ru,
+markup_ru.add(Perm_ru, Berezniki_ru, Solikamsk_ru, Chaikovsky_ru, Ru_why, Kungur_ru, Lysva_ru, Krasnokamsk_ru,
               Chusovoy_ru)
 
 markup_en = types.ReplyKeyboardMarkup(resize_keyboard=True)
+En_why = types.KeyboardButton('The importance of sorting')
 Perm_en = types.KeyboardButton('Perm')
 Berezniki_en = types.KeyboardButton('Berezniki')
 Solikamsk_en = types.KeyboardButton('Solikamsk')
@@ -297,7 +344,7 @@ Kungur_en = types.KeyboardButton('Kungur')
 Lysva_en = types.KeyboardButton('Lysva')
 Krasnokamsk_en = types.KeyboardButton('Krasnokamsk')
 Chusovoy_en = types.KeyboardButton('Chusovoy')
-markup_en.add(Perm_en, Berezniki_en, Solikamsk_en, Chaikovsky_en, Kungur_en, Lysva_en, Krasnokamsk_en,
+markup_en.add(Perm_en, Berezniki_en, Solikamsk_en, Chaikovsky_en, En_why, Kungur_en, Lysva_en, Krasnokamsk_en,
               Chusovoy_en)
 
 while True:
