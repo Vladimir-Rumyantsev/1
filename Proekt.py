@@ -210,36 +210,36 @@ def sort_by_assessment_duration_hours(database):
             arr = binary_insertion_sort(arr)
             print('\nОтлично, вот дисциплины которые вы искали:')
             for i in range(len(arr)):
-                print(f'{i}. {arr[i].name}')
-            return 
+                print(f'{i}. {arr[i]}')
+            return
         elif a == '2':
             arr = binary_insertion_sort(arr)
             arr.reverse()
             print('\nОтлично, вот дисциплины которые вы искали:')
             for i in range(len(arr)):
-                print(f'{i}. {arr[i].name}')
-            return 
+                print(f'{i}. {arr[i]}')
+            return
         else:
             print('Кажется вы ввели не 1 и не 2. возвращаю вас на главный экран')
-            return 
-    
+            return
+
     a = input('Вы зашли в функцию сортировки дисциплин в базе данных с заданным видом отчётности\n'
               'Введите "1" или "Зачёт", чтобы выбрать группу дисциплин с видом отчётности "Зачёт"\n'
               'Введите "2" или "Экзамен", чтобы выбрать группу дисциплин с видом отчётности "Экзамен"\n'
               'Или введите что-нибудь другое чтобы вернуться в главное меню\n'
               'Ваш ввод: ')
-    if a == "1" or a.lower() == "зачёт":
+    if (a == "1") or (a.lower() == "зачёт"):
         arr = []
         for i in range(len(database)):
             if str(database[i].assessment).lower() == 'зачёт':
-                arr.append(database[i])
+                arr.append(database[i].name)
         sab(arr)
         return
-    elif a == "2" or a.lower() == "экзамен":
+    elif (a == "2") or (a.lower() == "экзамен"):
         arr = []
         for i in range(len(database)):
             if str(database[i].assessment).lower() == 'экзамен':
-                arr.append(database[i])
+                arr.append(database[i].name)
         sab(arr)
         return
     else:
@@ -247,11 +247,11 @@ def sort_by_assessment_duration_hours(database):
 
 
 A = []
-A.append(Discipline('Химия', 4, "Не важно", 200, "Не важно", "ХимFuck"))
-A.append(Discipline('Матеша', 2, "Не важно", 300, "Не важно", "Мехмат"))
-A.append(Discipline("ЯП", 3, "Не важно", 250, "Не важно", "ИКНТ"))
-A.append(Discipline("Физикааааааа", 5, "Не важно", 80, "Не важно", "ФизFuck"))
-A.append(Discipline("Английский", 1, "Не важно", 100, "Не важно", "Языки"))
+A.append(Discipline('Химия', 4, "Не важно", 200, "Экзамен", "ХимFuck"))
+A.append(Discipline('Матеша', 2, "Не важно", 300, "Экзамен", "Мехмат"))
+A.append(Discipline("ЯП", 3, "Не важно", 250, "Зачёт", "ИКНТ"))
+A.append(Discipline("Физикааааааа", 5, "Не важно", 80, "Экзамен", "ФизFuck"))
+A.append(Discipline("Английский", 1, "Не важно", 100, "Зачёт", "Языки"))
 while True:
     try:
         i = int(input('Время для i: ')) - 1
