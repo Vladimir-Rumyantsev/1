@@ -56,9 +56,9 @@ def edit_discipline(database):
         for i in range(ln):
             if sab.lower() == str(database[i].name).lower():
                 a = 'Тут может быть написано всё что угодно'
-                print(f'В базе данный обнаружена дисциплина "{database[i].name}".')
+                print(f'В базе данных обнаружена дисциплина "{database[i].name}".')
                 while a != '0':
-                    a = str(input(f'Воспользуйтесь меню ниже для корректировки дисциплинs "{database[i].name}"\n'
+                    a = str(input(f'Воспользуйтесь меню ниже для корректировки дисциплины "{database[i].name}"\n'
                                   f'Введите "0" для возвращения в главное меню\n'
                                   f'Введите "1" для изменения названия дисциплины "{database[i].name}"\n'
                                   f'Введите "2" для изменения семестра, с которого начинается чтение '
@@ -96,7 +96,7 @@ def edit_discipline(database):
                         database[i].department = str(input(f'Введите новую информацию о кафедре, которая читает '
                                                      f'дисциплину "{database[i].name}"'))
                         print('Готово!\n')
-                    else:
+                    elif a != '0':
                         print('Кажется вы ввели не цифру от 0 до 6. Попробуйте снова, у вас обязательно получится!\n')
 
                 return
@@ -104,6 +104,38 @@ def edit_discipline(database):
         if chek == 0:
             print('Данная дисциплина не была обнаружена в базе данных. Возможно вы ошиблись при вводе её названия')
 
+
+def display_database(database):
+    ln = len(database)
+    if ln == 0:
+        print('В данный момент в базе данных нет ни одной дисциплины\nПеревожу вас в главное меню')
+        return
+    print('Вы зашли в функцию показа всех дисциплин имеющихся в базе данных\n'
+          f'На данный момент у нас их {ln}\nВот все из них:')
+    while 2 + 2 == 4:                                        # Простите, мне очень стыдно
+        for i in range(ln):
+            print(f'{i+1}. {database[i].name}\n')
+        a = str(input('Чтобы узнать больше о какой либо дисциплине - введите её номер или название\n'
+                      'Чтобы выйти из функции - введите "0" или "Выход"\nИтак, ваш выбор: '))
+        if (a == '0') or (a.lower() == 'выход'):
+            return 
+        chek = 0
+        for i in range(ln):
+            if (a == str(database[i].name)) or (a == str(i+1)):
+                print(f'Подробная информания о дисциплине "{database[i].name}":\n'
+                      f'Название дисциплины - {database[i].name}\n'
+                      f'Читается с - {database[i].semester} семестра\n'
+                      f'Продолжительность курса - {database[i].duration} семестр(а/ов)\n'
+                      f'Общее количество часов - {database[i].total_hours}\n'
+                      f'Вид отчётности - {database[i].assessment}\n'
+                      f'Читающая курс кафедра - {database[i].department}\n'
+                )
+                chek += 1
+        if chek == 0:
+            print('Такая дисциплина не найдена, возможно вы ошиблись в её названии')
+        input('Введите всё что угодно, чтобы вернуться к списку всех дисциплин: ')
+        print()
+        
 
 A = []
 for i in range(3):
