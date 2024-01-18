@@ -107,80 +107,26 @@ def edit_discipline(database):
 
 A = []
 for i in range(3):
-    A[i] = Discipline(0, 0, 0, 0, 0, 0)
+    A.append(Discipline(0, 0, 0, 0, 0, 0))
 while True:
-    a = int(input('1 или 2? '))
+    try:
+        a = int(input('1, 2 или 3? '))
 
-    if a == 1:
-        add_discipline(A)
-    elif a == 2:
-        remove_discipline(A)
+        if a == 1:
+            add_discipline(A)
+        elif a == 2:
+            remove_discipline(A)
+        elif a == 3:
+            edit_discipline(A)
 
-    i = int(input('Время для i: '))
-    print(
-        A[i].name,
-        A[i].semester,
-        A[i].duration,
-        A[i].total_hours,
-        A[i].assessment,
-        A[i].department
-    )
-
-#
-#
-#
-# def display_database(database):
-#     """
-#     Функция для вывода на экран всей базы дисциплин
-#     """
-#     pass
-#
-# def sort_by_semester_department_hours(database):
-#     """
-#     Функция для создания полного списка всех дисциплин с сортировкой по семестру, кафедре и общему количеству часов
-#     """
-#     pass
-#
-# def sort_by_assessment_duration_hours(database, assessment_type):
-#     """
-#     Функция для создания списка дисциплин с заданным видом отчётности и сортировкой по продолжительности курса и общему количеству часов
-#     """
-#     pass
-#
-# def sort_by_department_hours_range(database, min_hours, max_hours):
-#     """
-#     Функция для создания списка дисциплин с общим количеством часов в заданном диапазоне с сортировкой по кафедре и общему количеству часов
-#     """
-#     pass
-#
-# def binary_insertion_sort(data, key):
-#     """
-#     Функция для сортировки данных методом бинарной вставки по указанному ключу
-#     """
-#     pass
-#
-# def user_interface():
-#     """
-#     Функция для создания дружественного интерфейса пользователя
-#     """
-#     pass
-#
-# # Пример использования функций
-# database = []  # инициализация базы данных
-#
-# # добавление новых дисциплин
-# discipline1 = Discipline("Название1", 3, 2, 120, "экзамен", "Кафедра1")
-# add_discipline(database, discipline1)
-#
-# discipline2 = Discipline("Название2", 2, 4, 90, "зачёт", "Кафедра2")
-# add_discipline(database, discipline2)
-#
-# # вывод базы дисциплин
-# display_database(database)
-#
-# # создание списка дисциплин с сортировкой по семестру, кафедре и общему количеству часов
-# sorted_disciplines = sort_by_semester_department_hours(database)
-#
-# # отображение списка
-# for discipline in sorted_disciplines:
-#     print(discipline.name, discipline.semester, discipline.department, discipline.total_hours)
+        i = int(input('Время для i: '))
+        print(
+            A[i].name,
+            A[i].semester,
+            A[i].duration,
+            A[i].total_hours,
+            A[i].assessment,
+            A[i].department
+        )
+    except Exception as ex:
+        print(ex)
