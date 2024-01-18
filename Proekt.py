@@ -114,11 +114,11 @@ def display_database(database):
           f'На данный момент у нас их {ln}\nВот все из них:')
     while 2 + 2 == 4:                                        # Простите, мне очень стыдно
         for i in range(ln):
-            print(f'{i+1}. {database[i].name}\n')
+            print(f'{i+1}. {database[i].name}')
         a = str(input('Чтобы узнать больше о какой либо дисциплине - введите её номер или название\n'
                       'Чтобы выйти из функции - введите "0" или "Выход"\nИтак, ваш выбор: '))
         if (a == '0') or (a.lower() == 'выход'):
-            return 
+            return
         chek = 0
         for i in range(ln):
             if (a == str(database[i].name)) or (a == str(i+1)):
@@ -135,30 +135,106 @@ def display_database(database):
             print('Такая дисциплина не найдена, возможно вы ошиблись в её названии')
         input('Введите всё что угодно, чтобы вернуться к списку всех дисциплин: ')
         print()
-        
+
+
+def binary_insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        left, right = 0, i
+        while left < right:
+            mid = (left + right) // 2
+            if arr[mid] < key:
+                left = mid + 1
+            else:
+                right = mid
+        for j in range(i, left, -1):
+            arr[j] = arr[j-1]
+        arr[left] = key
+    return arr
+
+
+def sort_by_semester_department_hours(database):
+    def sab(database, i, sort):
+        if sort == 1:
+            return database[i].semester
+        elif sort == 2:
+            return database[i].department
+        return database[i].total_hours
+
+    a = input('Вы зашли в функцию сортировки дисциплин в базе данных\n'
+              'Введите "1" для сортировки базы данных по семестру с которого читается дисциплина (по возрастанию)\n'
+              'Введите "2" для сортировки базы данных по читающей дисциплюну кафедре (по алфавиту)\n'
+              'Введите "3" для сортировки базы данных по общему количеству часов чтения дисциплины (по убыванию)\n'
+              'Любой другой ввод выведет вас в главное меню\n'
+              'Итак, ваш выбор: ')
+
+    sort = 0
+    if a == '1':
+        sort = 1
+    elif a == '2':
+        sort = 2
+    elif a == '3':
+        sort = 3
+    else:
+        return database
+
+    arr = []
+    output = []
+    ln = len(database)
+    for i in range(ln):
+        try:
+            arr.append(sab(database, i, sort))
+        except:
+            print('Неправильный формат данных')
+    arr = binary_insertion_sort(arr)
+    for i in range(len(arr)):
+        for j in range(ln):
+            if arr[i] == sab(database, j, sort):
+                output.append(database[j])
+    print('Готово!')
+    if a != '3':
+        return output
+    output2 = []
+    for i in range(len(output)-1, -1, -1):
+        output2.append(output[i])
+    return output2
+
 
 A = []
-for i in range(3):
-    A.append(Discipline(0, 0, 0, 0, 0, 0))
+A.append(Discipline('Химия', 4, "Не важно", 200, "Не важно", "ХимFuck"))
+A.append(Discipline('Матеша', 2, "Не важно", 300, "Не важно", "Мехмат"))
+A.append(Discipline("ЯП", 3, "Не важно", 250, "Не важно", "ИКНТ"))
+A.append(Discipline("Физикааааааа", 5, "Не важно", 80, "Не важно", "ФизFuck"))
+A.append(Discipline("Английский", 1, "Не важно", 100, "Не важно", "Языки"))
 while True:
     try:
-        a = int(input('1, 2 или 3? '))
+        i = int(input('Время для i: ')) - 1
+        if 0 <= i <= 5:
+            print(
+                A[i].name,
+                A[i].semester,
+                A[i].duration,
+                A[i].total_hours,
+                A[i].assessment,
+                A[i].department
+            )
+        else:
+            a = int(input('Какая функция?\n'
+                          '1. Добавить\n'
+                          '2. Удалить\n'
+                          '3. Редактировать\n'
+                          '4. Показать массив\n'
+                          '5. Сортировка\n'))
 
-        if a == 1:
-            add_discipline(A)
-        elif a == 2:
-            remove_discipline(A)
-        elif a == 3:
-            edit_discipline(A)
-
-        i = int(input('Время для i: '))
-        print(
-            A[i].name,
-            A[i].semester,
-            A[i].duration,
-            A[i].total_hours,
-            A[i].assessment,
-            A[i].department
-        )
+            if a == 1:
+                add_discipline(A)
+            elif a == 2:
+                remove_discipline(A)
+            elif a == 3:
+                edit_discipline(A)
+            elif a == 4:
+                display_database(A)
+            elif a == 5:
+                A = sort_by_semester_department_hours(A)
     except Exception as ex:
         print(ex)
