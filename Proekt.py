@@ -8,42 +8,19 @@ class Discipline:
         self.department = department
 
 
-def binary_search(arr, item, start, end, key):
-    if start == end:
-        if key(arr[start]) > key(item):
-            return start
-        else:
-            return start + 1
-    if start > end:
-        return start
-
-    mid = (start + end) // 2
-    if key(arr[mid]) < key(item):
-        return binary_search(arr, item, mid + 1, end, key)
-    elif key(arr[mid]) > key(item):
-        return binary_search(arr, item, start, mid - 1, key)
-    else:
-        return mid
-
-
-def binary_insertion_sort(arr, key=lambda x: x):
+def binary_insertion_sort(arr, lam=lambda x: x):
     for i in range(1, len(arr)):
-        item = arr[i]
-
-        j = binary_search(arr, item, 0, i - 1, key)
-
-        arr = arr[:j] + [item] + arr[j:i] + arr[i + 1:]
-    return arr
-
-
-def binary_insertion_sort_2(arr, key=lambda x: x):
-    for i in range(1, len(arr)):
-        item = arr[i]
-        index = i - 1
-        while index >= 0 and key(item) < key(arr[index]):
-            arr[index + 1] = arr[index]
-            index -= 1
-        arr[index + 1] = item
+        key = arr[i]
+        left, right = 0, i
+        while left < right:
+            mid = (left + right) // 2
+            if lam(arr[mid]) < lam(key):
+                left = mid + 1
+            else:
+                right = mid
+        for j in range(i, left, -1):
+            arr[j] = arr[j - 1]
+        arr[left] = key
     return arr
 
 
@@ -247,69 +224,38 @@ def display_database(database):
         print()
 
 
-def sort_by_semester_department_hours(database):
+def sort(database):
     try:
-        sort = int(input('\n————————————————————————————————————————————————————————————————\n\n'
-                         'Вы зашли в функцию сортировки дисциплин в базе данных\n'
-                         'Введите "1" для сортировки базы данных по семестру с которого читается дисциплина '
-                         '(по возрастанию)\n'
-                         'Введите "2" для сортировки базы данных по читающей дисциплину кафедре (по алфавиту)\n'
-                         'Введите "3" для сортировки базы данных по общему количеству часов чтения дисциплины '
-                         '(по убыванию)\nЛюбой другой ввод выведет вас в главное меню\nВаш ввод: '))
-        if not (1 <= sort <= 3):
+        srt = int(input('\n————————————————————————————————————————————————————————————————\n\n'
+                        'Вы зашли в функцию "Учебный план"!\nВыберите номер отчёта, который вы хотите создать:\n'
+                        'Введите "1" для сортировки дисциплин по: семестру начала чтения (по возрастанию) + '
+                        'читающей кафедре (по возрастанию) + общему количеству часов (по убыванию)\n'
+                        'Введите "2" для сортировки дисциплин по: заданному виду отчётности + '
+                        'продолжительности курса (по возрастанию) + общему количеству часов (по убыванию)\n'
+                        'Введите "3" для сортировки дисциплин по: общему количеству часов в определённом диапозоне + '
+                        'читающей кафедре (по возрастанию) + общему количеству часов (по убыванию)\n'
+                        'Любой другой ввод выведет вас в главное меню\nВаш ввод: '))
+        if not (1 <= srt <= 3):
             print(f'\nВозвращаемся в главное меню\n'
                   f'\n————————————————————————————————————————————————————————————————\n')
-            return database
+            return
     except:
         print(f'\nВозвращаемся в главное меню\n'
               f'\n————————————————————————————————————————————————————————————————\n')
-        return database
+        return
 
-    if sort == 1:
-        print(f'\nВот тут эта жесть\n\n'
-              f'{sorted(database, key=lambda x: (x.semester, x.department, -x.total_hours))}\n\n')
-        try:
-            sorted_database = binary_insertion_sort(key=lambda x: (x.semester, x.department, -x.total_hours))
-            print('\nКажется получилось!!!\n')
-        except:
-            sorted_database = sorted(database, key=lambda x: (x.semester, x.department, -x.total_hours))
-    elif sort == 2:
-        sorted_database = sorted(database, key=lambda x: (x.department, x.semester, -x.total_hours))
-    elif sort == 3:
-        sorted_database = sorted(database, key=lambda x: (-x.total_hours, x.semester, x.department))
+    if srt == 1:
+        arr = binary_insertion_sort(binary_insertion_sort((binary_insertion_sort(database.copy(),
+                                    lambda x: x.total_hours)), lambda x: x.department), lambda x: x.semester)
+        print(f'\nДисциплины отсортированные по вашему запросу:')
+        for i in range(len(arr)):
+            print(f'{i+1}. {arr[i].name}')
+    elif srt == 2:
+        sort_2(database)
+    elif srt == 3:
+        sort_3(database)
 
-    return sorted_database
-
-
-def sort_by_assessment_duration_hours(database):
-    try:
-        assessment_type = input('\nВыберите вид отчётности ("Зачёт" или "Экзамен"): ').capitalize()
-
-        sorted_database = [discipline for discipline in database if discipline.assessment == assessment_type]
-        sorted_database = sorted(sorted_database, key=lambda x: (x.duration, -x.total_hours))
-
-        return sorted_database
-    except:
-        print(f'\nВозвращаемся в главное меню\n'
-              f'\n————————————————————————————————————————————————————————————————\n')
-        return database
-
-
-def sort_by_department_hours_range(database):
-    try:
-        N1, N2 = map(int, input('\n————————————————————————————————————————————————————————————————\n\n'
-                                'Вы зашли в функцию для поиска дисциплин с общим количеством часов в заданном '
-                                'промежутке\nЧтобы найти дисциплины, в которых общее количество часов чтения находится '
-                                'в заданном диапазоне, введите два числа через пробел: Минимальное и Максимальное '
-                                'количество часов чтения для соответствующей дисциплины\n'
-                                'Чтобы выйти в главное меню - введите что угодно другое\n'
-                                'Ваш ввод: ').split(" ", 1))
-        result = [discipline for discipline in database if N1 <= discipline.total]
-        return result
-    except:
-        print(f'\nВозвращаемся в главное меню\n'
-              f'\n————————————————————————————————————————————————————————————————\n')
-        return database
+    return
 
 
 A = [
@@ -324,6 +270,7 @@ A = [
     Discipline("Физкультура", 1, 2, 50, "Зачёт", "Кафедра физической культуры"),
     Discipline("Экономика", 5, 2, 100, "Зачёт", "Экономический факультет")
 ]
+
 print('\nДобро пожаловать в программу для работы с базой данных по дисциплинам!\n'
       'Надеюсь опыт пользования программой вам понравится!\n'
       'Переходим в главное меню программы...\n'
@@ -331,14 +278,12 @@ print('\nДобро пожаловать в программу для работ
 while True:
     try:
         a = str(input('Главное меню\n\n'
-                      'Выберите функцию для работы с базой данных (для этого введите число от 1 до 7)\n'
+                      'Выберите функцию для работы с базой данных (для этого введите число от 1 до 5)\n'
                       '1. Добавить дисциплину\n'
                       '2. Удалить дисциплину\n'
                       '3. Редактировать дисциплину\n'
                       '4. Показать список всех дисциплин\n'
-                      '5. Сортировка дисциплин\n'
-                      '6. Сортировка по отчётности\n'
-                      '7. Список дисциплин с общим количеством часов в заданном диапазоне\n'
+                      '5. Учебный план (создать отчёт)\n'
                       'Ваш ввод: '))
         if a == '1':
             add_discipline(A)
@@ -349,136 +294,10 @@ while True:
         elif a == '4':
             display_database(A)
         elif a == '5':
-            A = sort_by_semester_department_hours(A)
-        elif a == '6':
-            A = sort_by_assessment_duration_hours(A)
-        elif a == '7':
-            A = sort_by_department_hours_range(A)
+            sort(A)
         else:
-            print('\nВы ввели не число от 1 до 7. Попробуйте ещё раз, у вас обязательно получится!\n'
+            print('\nВы ввели не число от 1 до 5. Попробуйте ещё раз, у вас обязательно получится!\n'
                   '\n————————————————————————————————————————————————————————————————\n')
     except Exception as ex:
         print(f'\nК сожалению, во время работы программы произошла ошибка...\n{ex}\n'
               f'\n————————————————————————————————————————————————————————————————\n')
-
-
-#
-#
-# def sort_by_semester_department_hours(database):
-#     def sab(database, i, sort):
-#         if sort == 1:
-#             return database[i].semester
-#         elif sort == 2:
-#             return database[i].department
-#         return database[i].total_hours
-#
-#     a = input('Вы зашли в функцию сортировки дисциплин в базе данных\n'
-#               'Введите "1" для сортировки базы данных по семестру с которого читается дисциплина (по возрастанию)\n'
-#               'Введите "2" для сортировки базы данных по читающей дисциплюну кафедре (по алфавиту)\n'
-#               'Введите "3" для сортировки базы данных по общему количеству часов чтения дисциплины (по убыванию)\n'
-#               'Любой другой ввод выведет вас в главное меню\n'
-#               'Итак, ваш выбор: ')
-#
-#     sort = 3
-#     if a == '1':
-#         sort = 1
-#     elif a == '2':
-#         sort = 2
-#     elif a != '3':
-#         return database
-#
-#     arr = []
-#     output = []
-#     ln = len(database)
-#     for i in range(ln):
-#         try:
-#             arr.append(sab(database, i, sort))
-#         except:
-#             print('Неправильный формат данных')
-#     arr = binary_insertion_sort(arr)
-#     for i in range(len(arr)):
-#         for j in range(ln):
-#             if arr[i] == sab(database, j, sort):
-#                 output.append(database[j])
-#     print('Готово!')
-#     if a != '3':
-#         return output
-#     output.reverse()
-#     return output
-#
-#
-# def sort_by_assessment_duration_hours(database):
-#     def sab(arr):
-#         a = input('А теперь введите номер сортировки, которая устраивает вас больше:\n'
-#                   '1. Продолжительность курса в семестрах (по возрастанию)\n'
-#                   '2. Общее количество часов (по убыванию)\n'
-#                   'Ваш ввод: ')
-#         if a == '1':
-#             arr = binary_insertion_sort(arr)
-#             print('\nОтлично, вот дисциплины которые вы искали:')
-#             for i in range(len(arr)):
-#                 print(f'{i}. {arr[i]}')
-#             return
-#         elif a == '2':
-#             arr = binary_insertion_sort(arr)
-#             arr.reverse()
-#             print('\nОтлично, вот дисциплины которые вы искали:')
-#             for i in range(len(arr)):
-#                 print(f'{i}. {arr[i]}')
-#             return
-#         else:
-#             print('Кажется вы ввели не 1 и не 2. возвращаю вас на главный экран')
-#             return
-#
-#     a = input('Вы зашли в функцию сортировки дисциплин в базе данных с заданным видом отчётности\n'
-#               'Введите "1" или "Зачёт", чтобы выбрать группу дисциплин с видом отчётности "Зачёт"\n'
-#               'Введите "2" или "Экзамен", чтобы выбрать группу дисциплин с видом отчётности "Экзамен"\n'
-#               'Или введите что-нибудь другое чтобы вернуться в главное меню\n'
-#               'Ваш ввод: ')
-#     if (a == "1") or (a.lower() == "зачёт"):
-#         arr = []
-#         for i in range(len(database)):
-#             if str(database[i].assessment).lower() == 'зачёт':
-#                 arr.append(database[i].name)
-#         sab(arr)
-#         return
-#     elif (a == "2") or (a.lower() == "экзамен"):
-#         arr = []
-#         for i in range(len(database)):
-#             if str(database[i].assessment).lower() == 'экзамен':
-#                 arr.append(database[i].name)
-#         sab(arr)
-#         return
-#     else:
-#         return
-#
-#
-# def sort_by_department_hours_range(database):
-#     N = input('Вы зашли в функцию для поиска дисциплин с общим количеством часов в заданном промежутке\n'
-#               'Чтобы найти дисциплины, в которых общее количество часов чтения находится в заданном диапазоне, '
-#               'введите два числа через пробел: Минимальное и Максимальное количество часов чтения для '
-#               'соответствующей дисциплины\nЧтобы выйти в главное меню - введите что угодно другое\n'
-#               'Ваш ввод: ')
-#     try:
-#         N1, N2 = int(map(N.split(" ", 1)))
-#         arr1 = []
-#         arr2 = []
-#         for i in range(len(database)):
-#             if N1 <= int(database[i].total_hours) <= N2:
-#                 arr1.append(database[i].department)
-#                 arr2.append(database[i].total_hours)
-#         N = input('\nОтлично, а теперь выберите номер сортировки, которая вас больше устраивает\n'
-#                   '1. Читающая кафедра (по алфавиту)\n'
-#                   '2. Общее количество часов (по убыванию)\n'
-#                   'Ваш ввод: ')
-#         if N == '1':
-#             print('Строка 264')
-#         elif N == '2':
-#             print('Строка 266')
-#         else:
-#             print('Вы ввели не 1 и не 2, перенаправляю вас в главное меню')
-#             return
-#
-#     except:
-#         print('\nВыход в главное меню')
-#         return
