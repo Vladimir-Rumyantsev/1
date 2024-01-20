@@ -262,20 +262,19 @@ def sort(database):
             print()
 
         elif srt == 2:
-            srt = str(input('\nВыберите вид отчётности, по которому нужно выдать выборку дисциплин\n'
+            srt = input('\nВыберите вид отчётности, по которому нужно выдать выборку дисциплин\n'
                         'Введите "1" или "Зачёт", чтобы выбрать вид отчётности "Зачёт"\n'
                         'Введите "2" или "Экзамен", чтобы выбрать вид отчётности "Экзамен"\n'
-                        'Ваш ввод:'))
-            arr = database.copy()
-            print('Тут ещё норм')
+                        'Ваш ввод: ')
+            arr = []
             if srt == '1' or srt.lower() == 'зачёт':
-                for i in range(len(arr)):
-                    if str(arr[i].assessment).lower() != 'зачёт':
-                        arr.pop(i)
+                for i in range(len(database)):
+                    if str(database[i].assessment).lower() == 'зачёт':
+                        arr.append(database[i])
             elif srt == '2' or srt.lower() == 'экзамен':
-                for i in range(len(arr)):
-                    if str(arr[i].assessment).lower() != 'экзамен':
-                        arr.pop(i)
+                for i in range(len(database)):
+                    if str(database[i].assessment).lower() == 'экзамен':
+                        arr.append(database[i])
 
             arr = binary_insertion_sort((binary_insertion_sort(arr, lambda x: -x.total_hours)), lambda x: x.duration)
             print(f'\nДисциплины отсортированные по вашему запросу:')
@@ -301,10 +300,10 @@ def sort(database):
                       f'\n————————————————————————————————————————————————————————————————\n')
                 return
 
-            arr = database.copy()
-            for i in range(len(arr)):
-                if not (n1 <= int(arr[i].total_hours) <= n2):
-                    arr.pop(i)
+            arr = []
+            for i in range(len(database)):
+                if n1 <= int(database[i].total_hours) <= n2:
+                    arr.append(database[i])
 
             arr = binary_insertion_sort((binary_insertion_sort(arr, lambda x: -x.total_hours)), lambda x: x.department)
             print(f'\nДисциплины отсортированные по вашему запросу:')
