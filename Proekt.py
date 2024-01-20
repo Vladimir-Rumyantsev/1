@@ -8,19 +8,42 @@ class Discipline:
         self.department = department
 
 
-def binary_insertion_sort(arr):
+def binary_search(arr, item, start, end, key):
+    if start == end:
+        if key(arr[start]) > key(item):
+            return start
+        else:
+            return start + 1
+    if start > end:
+        return start
+
+    mid = (start + end) // 2
+    if key(arr[mid]) < key(item):
+        return binary_search(arr, item, mid + 1, end, key)
+    elif key(arr[mid]) > key(item):
+        return binary_search(arr, item, start, mid - 1, key)
+    else:
+        return mid
+
+
+def binary_insertion_sort(arr, key=lambda x: x):
     for i in range(1, len(arr)):
-        key = arr[i]
-        left, right = 0, i
-        while left < right:
-            mid = (left + right) // 2
-            if arr[mid] < key:
-                left = mid + 1
-            else:
-                right = mid
-        for j in range(i, left, -1):
-            arr[j] = arr[j-1]
-        arr[left] = key
+        item = arr[i]
+
+        j = binary_search(arr, item, 0, i - 1, key)
+
+        arr = arr[:j] + [item] + arr[j:i] + arr[i + 1:]
+    return arr
+
+
+def binary_insertion_sort_2(arr, key=lambda x: x):
+    for i in range(1, len(arr)):
+        item = arr[i]
+        index = i - 1
+        while index >= 0 and key(item) < key(arr[index]):
+            arr[index + 1] = arr[index]
+            index -= 1
+        arr[index + 1] = item
     return arr
 
 
