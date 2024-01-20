@@ -249,7 +249,10 @@ def sort(database):
             arr = binary_insertion_sort(binary_insertion_sort((binary_insertion_sort(database.copy(),
                                                                                      lambda x: -x.total_hours)),
                                                               lambda x: x.department), lambda x: x.semester)
-            print(f'\nДисциплины отсортированные по вашему запросу:')
+            if len(arr) > 0:
+                print(f'\nДисциплины, отсортированные по вашему запросу:')
+            else:
+                print('\nНа данный момент в базе нет ни одной дисциплины, удовлетворяющей вашим требованиям')
             for i in range(len(arr)):
                 print(f'{i + 1}. {arr[i].name}')
             srt = str(input('\nВведите "0" или "Выход", чтобы вернуться в гланое меню'
@@ -277,7 +280,10 @@ def sort(database):
                         arr.append(database[i])
 
             arr = binary_insertion_sort((binary_insertion_sort(arr, lambda x: -x.total_hours)), lambda x: x.duration)
-            print(f'\nДисциплины отсортированные по вашему запросу:')
+            if len(arr) > 0:
+                print(f'\nДисциплины, отсортированные по вашему запросу:')
+            else:
+                print('\nНа данный момент в базе нет ни одной дисциплины, удовлетворяющей вашим требованиям')
             for i in range(len(arr)):
                 print(f'{i + 1}. {arr[i].name}')
             srt = str(input('\nВведите "0" или "Выход", чтобы вернуться в гланое меню'
@@ -292,7 +298,7 @@ def sort(database):
             try:
                 n1, n2 = map(int, input('\nЧтобы подготовить выборку дисциплин, в которой общее количество часов '
                                         'чтения находится в заданном диапазоне, введите два числа через пробел: '
-                                        'Минимальное и Максимальное количество часов чтения для дисциплин\n'
+                                        'Минимальное и Максимальное количество часов чтения дисциплин\n'
                                         'Чтобы выйти в главное меню - введите что угодно другое\n'
                                         'Ваш ввод: ').split(" ", 1))
             except:
@@ -306,7 +312,10 @@ def sort(database):
                     arr.append(database[i])
 
             arr = binary_insertion_sort((binary_insertion_sort(arr, lambda x: -x.total_hours)), lambda x: x.department)
-            print(f'\nДисциплины отсортированные по вашему запросу:')
+            if len(arr) > 0:
+                print(f'\nДисциплины, отсортированные по вашему запросу:')
+            else:
+                print('\nНа данный момент в базе нет ни одной дисциплины, удовлетворяющей вашим требованиям')
             for i in range(len(arr)):
                 print(f'{i + 1}. {arr[i].name}')
             srt = str(input('\nВведите "0" или "Выход", чтобы вернуться в гланое меню'
