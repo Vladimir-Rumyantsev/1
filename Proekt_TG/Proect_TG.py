@@ -13,12 +13,12 @@ class Discipline:                          # Создание класса Disci
 
 
 def telegram_bot_output(person, text):
-    bot = telebot.TeleBot('6783575727:AAEopqzWZHr4BfrCnYUB979TNJgrs8xtc3s')
+    bot = telebot.TeleBot(TOKEN)
     bot.send_message(person, text)
 
 
 def telegram_bot_input():
-    bot = telebot.TeleBot('6783575727:AAEopqzWZHr4BfrCnYUB979TNJgrs8xtc3s')
+    bot = telebot.TeleBot(TOKEN)
 
     @bot.message_handler(content_types=['text'])
     def send_text(message):
