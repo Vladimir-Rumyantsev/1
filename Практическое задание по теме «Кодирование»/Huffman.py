@@ -58,7 +58,6 @@ if __name__ == '__main__':
     string = read_talks()
     freq = dict(Counter(string))
     freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
-    print(f'{freq}\n')
     node = make_tree(freq)
     encoding = huffman_code_tree(node)
     for i in encoding:
