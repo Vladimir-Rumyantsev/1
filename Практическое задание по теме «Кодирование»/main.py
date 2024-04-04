@@ -144,12 +144,3 @@ with open('output.txt', 'w', encoding="utf-8") as file:
                 line = f'{line}{alphabet[' '][1]}'
 
     file.write(f'{line}')
-
-
-with open('output.txt', 'r', encoding="utf-8") as file:
-    the_number_of_chars_in_the_result = 0
-
-    x = file.readlines()
-    for i in x:
-        for j in i:
-            the_number_of_chars_in_the_result += 1
