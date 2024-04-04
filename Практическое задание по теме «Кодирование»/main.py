@@ -21,9 +21,12 @@ def read_talks() -> str:
     result = ''
 
     for i in arr:
-        result = f'{result} {i[:-1]}'
-
-    return result[1:]
+        for j in i:
+            if j != '\n':
+                result = f'{result}{j}'
+            else:
+                result = f'{result} '
+    return result
 
 
 def combining_probabilities(n):
@@ -112,11 +115,6 @@ for i in alphabet:
     database[0].append(Node([i], alphabet[i][0]))
 database[0] = sorted(database[0], key=lambda x: -x.quantity)
 
-for i in database[0]:
-    print(f"'{i.data[0]}': {i.quantity}")
-
-print('\n')
-
 combining_probabilities(len_alphabet)
 
 for i in database[0]:
@@ -129,16 +127,28 @@ the_number_of_chars_in_the_result: int = 0
 for i in alphabet:
     redundancy += (len(str(alphabet[i][1])) * (alphabet[i][0] / total))
     the_number_of_chars_in_the_result += (len(str(alphabet[i][1])) * alphabet[i][0])
-    print(f"'{i}': {alphabet[i]}")
+    print(f"Символ: '{i}'\nКоличество в text.txt: {alphabet[i][0]}\nКод: {alphabet[i][1]}\n")
 
-print(f'\n\nИзбыточность: {redundancy}\nКоличество символов в "output.txt": {the_number_of_chars_in_the_result}')
+print(f'\nИзбыточность: {redundancy}\nКоличество символов в "output.txt": {the_number_of_chars_in_the_result}')
 
 
 with open('output.txt', 'w', encoding="utf-8") as file:
+    line = ''
 
     for i in arr:
-        line = ''
-        for j in i[:-1]:
-            line = f'{line}{alphabet[j.upper()][1]}'
+        for j in i:
+            if j != '\n':
+                line = f'{line}{alphabet[j.upper()][1]}'
+            else:
+                line = f'{line}{alphabet[' '][1]}'
 
-        file.write(f'{line}\n')
+    file.write(f'{line}')
+
+
+with open('output.txt', 'r', encoding="utf-8") as file:
+    the_number_of_chars_in_the_result = 0
+
+    x = file.readlines()
+    for i in x:
+        for j in i:
+            the_number_of_chars_in_the_result += 1
