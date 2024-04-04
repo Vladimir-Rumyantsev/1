@@ -84,7 +84,7 @@ def combining_probabilities(n):
 line = read_talks()
 total = len(line)
 
-len_alphabet = input('\nВведите количество символов в алфавите (2 или 4): ')
+len_alphabet = input('\n\nВведите количество символов в алфавите (2 или 4): ')
 is_prefix = input('\nПрефиксное дерево или суффиксное?\nЕсли префиксное — введите "1"'
                   '\nЕсли суффиксное — введите "2"\nВаш ввод: ')
 
@@ -128,9 +128,10 @@ the_number_of_chars_in_the_result: int = 0
 for i in alphabet:
     redundancy += (len(str(alphabet[i][1])) * (alphabet[i][0] / total))
     the_number_of_chars_in_the_result += (len(str(alphabet[i][1])) * alphabet[i][0])
-    print(f"Символ: '{i}'\nКоличество в text.txt: {alphabet[i][0]}\nКод: {alphabet[i][1]}\n")
+    print(f"'{i}': {alphabet[i][1]}\nКоличество в text.txt: {alphabet[i][0]}\n")
 
-print(f'\nИзбыточность: {redundancy}\nКоличество символов в "output.txt": {the_number_of_chars_in_the_result}')
+print(f'\nСоздан файл "output.txt", в котором закодированный текст из "text.txt"\n'
+      f'\nИзбыточность: {redundancy}\nКоличество символов в "output.txt": {the_number_of_chars_in_the_result}\n')
 
 
 with open('output.txt', 'w', encoding="utf-8") as file:
