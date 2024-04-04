@@ -2,6 +2,7 @@ alphabet = {' ': [0], 'А': [0], 'Б': [0], 'В': [0], 'Г': [0], 'Д': [0], 'Е
             'Й': [0], 'К': [0], 'Л': [0], 'М': [0], 'Н': [0], 'О': [0], 'П': [0], 'Р': [0], 'С': [0], 'Т': [0],
             'У': [0], 'Ф': [0], 'Х': [0], 'Ц': [0], 'Ч': [0], 'Ш': [0], 'Щ': [0], 'Ъ': [0], 'Ы': [0], 'Ь': [0],
             'Э': [0], 'Ю': [0], 'Я': [0]}
+arr: list = []
 
 
 class Node:
@@ -12,6 +13,8 @@ class Node:
 
 
 def read_talks() -> str:
+    global arr
+
     with open('text.txt', 'r', encoding="utf-8") as file:
         arr = file.readlines()
 
@@ -81,16 +84,16 @@ def combining_probabilities(n):
 line = read_talks()
 total = len(line)
 
-len_alphabet = input('Введите количество символов в алфавите (2 или 4): ')
+len_alphabet = input('\nВведите количество символов в алфавите (2 или 4): ')
 is_prefix = input('\nПрефиксное дерево или суффиксное?\nЕсли префиксное — введите "1"'
                   '\nЕсли суффиксное — введите "2"\nВаш ввод: ')
 
-if len_alphabet == "4":
+if len_alphabet == '4':
     len_alphabet = 4
 else:
     len_alphabet = 2
 
-if is_prefix == "2":
+if is_prefix == '2':
     is_prefix = False
 else:
     is_prefix = True
@@ -110,7 +113,7 @@ for i in alphabet:
 database[0] = sorted(database[0], key=lambda x: -x.quantity)
 
 for i in database[0]:
-    print(f'{i.data}: {i.quantity}')
+    print(f"'{i.data[0]}': {i.quantity}")
 
 print('\n')
 
@@ -119,5 +122,22 @@ combining_probabilities(len_alphabet)
 for i in database[0]:
     alphabet[i.data[0]].append(i.result)
 
+redundancy: float = 0
+the_number_of_chars_in_the_result: int = 0
+
 for i in alphabet:
+    redundancy += (len(str(alphabet[i][1])) * (alphabet[i][0] / total))
+    the_number_of_chars_in_the_result += (len(str(alphabet[i][1])) * alphabet[i][0])
     print(f"'{i}': {alphabet[i]}")
+
+print(f'\n\nИзбыточность: {redundancy}\nКоличество символов в "output.txt": {the_number_of_chars_in_the_result}')
+
+
+with open('output.txt', 'w', encoding="utf-8") as file:
+
+    for i in arr:
+        line = ''
+        for j in i[:-1]:
+            line = f'{line}{alphabet[j.upper()][1]}'
+
+        file.write(f'{line}\n')
