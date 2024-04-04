@@ -120,7 +120,8 @@ print('\n')
 combining_probabilities(len_alphabet)
 
 for i in database[0]:
-    alphabet[i.data[0]].append(i.result)
+    if i.data[0] != 'None':
+        alphabet[i.data[0]].append(i.result)
 
 redundancy: float = 0
 the_number_of_chars_in_the_result: int = 0
