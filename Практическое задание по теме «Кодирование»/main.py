@@ -21,11 +21,8 @@ def read_talks() -> str:
     result = ''
 
     for i in arr:
-        for j in i:
-            if j != '\n':
-                result = f'{result}{j}'
-            else:
-                result = f'{result} '
+        result = f'{result}{i}'
+
     return result
 
 
@@ -106,7 +103,11 @@ for i in line:
     if i in [' ', '\n']:
         alphabet[' '][0] += 1
     else:
-        alphabet[i.upper()][0] += 1
+        try:
+            alphabet[i.upper()][0] += 1
+        except Exception as ex:
+            print(f'\nОшибка во время чтения текста!!!\nНеизвестный символ {ex}')
+            exit()
 
 print('\n')
 
@@ -152,3 +153,5 @@ with open('output.txt', 'r', encoding="utf-8") as file:
     for i in x:
         for j in i:
             the_number_of_chars_in_the_result += 1
+
+    print(the_number_of_chars_in_the_result)
