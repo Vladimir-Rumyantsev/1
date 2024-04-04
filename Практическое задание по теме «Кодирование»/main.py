@@ -153,5 +153,3 @@ with open('output.txt', 'r', encoding="utf-8") as file:
     for i in x:
         for j in i:
             the_number_of_chars_in_the_result += 1
-
-    print(the_number_of_chars_in_the_result)
