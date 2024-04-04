@@ -5,10 +5,9 @@ alphabet = {' ': [0], 'А': [0], 'Б': [0], 'В': [0], 'Г': [0], 'Д': [0], 'Е
 
 
 class Node:
-    def __init__(self, data=None, quantity=None, is_children=False):
+    def __init__(self, data=None, quantity=None):
         self.data = data
         self.quantity = quantity
-        self.is_children = is_children
         self.result = ''
 
 
@@ -25,7 +24,6 @@ def read_talks() -> str:
 
 
 def combining_probabilities(n):
-
     if n == 4:
         while len(database[0]) % 3 != 1:
             database[0].append(Node(['None'], 0))
@@ -46,10 +44,9 @@ def combining_probabilities(n):
             for j in r[i].data:
                 data.append(j)
             quantity += r[i].quantity
-        database[-1].append(Node(data, quantity, True))
+        database[-1].append(Node(data, quantity))
 
         database[-1] = sorted(database[-1], key=lambda x: -x.quantity)
-
 
     if n == 2 and is_prefix:
         for i in range(len(database) - 1, 0, -1):
@@ -60,7 +57,7 @@ def combining_probabilities(n):
     elif n == 2 and not is_prefix:
         for i in range(len(database) - 1, 0, -1):
             for j in database[i]:
-                if database[i-1][-1].data[0] in j.data:
+                if database[i - 1][-1].data[0] in j.data:
                     database[i - 1][-1].result = f'1{j.result}'
                     database[i - 1][-2].result = f'0{j.result}'
     elif n == 4 and is_prefix:
@@ -79,10 +76,6 @@ def combining_probabilities(n):
                     database[i - 1][-2].result = f'2{j.result}'
                     database[i - 1][-3].result = f'1{j.result}'
                     database[i - 1][-4].result = f'0{j.result}'
-
-
-
-
 
 
 line = read_talks()
@@ -109,7 +102,6 @@ for i in line:
     else:
         alphabet[i.upper()][0] += 1
 
-
 print('\n')
 
 database = [[]]
@@ -124,12 +116,8 @@ print('\n')
 
 combining_probabilities(len_alphabet)
 
-for i in database:
-    for j in i:
-        print(j.data)
-    print('\n')
-
-print(total, '\n')
-
 for i in database[0]:
-    print(f'{i.data}: {i.result}')
+    alphabet[i.data[0]].append(i.result)
+
+for i in alphabet:
+    print(f"'{i}': {alphabet[i]}")
