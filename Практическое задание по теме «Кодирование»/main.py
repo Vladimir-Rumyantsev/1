@@ -1,7 +1,4 @@
-alphabet = {' ': [0], 'А': [0], 'Б': [0], 'В': [0], 'Г': [0], 'Д': [0], 'Е': [0], 'Ж': [0], 'З': [0], 'И': [0],
-            'Й': [0], 'К': [0], 'Л': [0], 'М': [0], 'Н': [0], 'О': [0], 'П': [0], 'Р': [0], 'С': [0], 'Т': [0],
-            'У': [0], 'Ф': [0], 'Х': [0], 'Ц': [0], 'Ч': [0], 'Ш': [0], 'Щ': [0], 'Ъ': [0], 'Ы': [0], 'Ь': [0],
-            'Э': [0], 'Ю': [0], 'Я': [0]}
+alphabet = {}
 arr: list = []
 
 
@@ -99,15 +96,10 @@ else:
     is_prefix = True
 
 for i in line:
-
-    if i in [' ', '\n']:
-        alphabet[' '][0] += 1
-    else:
-        try:
-            alphabet[i.upper()][0] += 1
-        except Exception as ex:
-            print(f'\nОшибка во время чтения текста!!!\nНеизвестный символ {ex}')
-            exit()
+    try:
+        alphabet[i][0] += 1
+    except:
+        alphabet[i] = [1]
 
 print('\n')
 
@@ -125,7 +117,7 @@ for i in database[0]:
 redundancy: float = 0
 the_number_of_chars_in_the_result: int = 0
 
-for i in alphabet:
+for i in sorted(alphabet):
     redundancy += (len(str(alphabet[i][1])) * (alphabet[i][0] / total))
     the_number_of_chars_in_the_result += (len(str(alphabet[i][1])) * alphabet[i][0])
     print(f"'{i}': {alphabet[i][1]}\nКоличество в text.txt: {alphabet[i][0]}\n")
@@ -135,13 +127,30 @@ print(f'\nСоздан файл "output.txt", в котором закодиро
 
 
 with open('output.txt', 'w', encoding="utf-8") as file:
+
     line = ''
 
     for i in arr:
         for j in i:
             if j != '\n':
-                line = f'{line}{alphabet[j.upper()][1]}'
+                line = f'{line}{alphabet[j][1]}'
             else:
                 line = f'{line}{alphabet[' '][1]}'
 
     file.write(f'{line}')
+
+
+with open('alphabet.txt', 'w', encoding="utf-8") as file:
+
+    line = ''
+    keys = []
+
+    for i in alphabet:
+        keys.append(i)
+
+    keys = sorted(keys)
+
+    for i in keys:
+        line = f"{line}\n'{i}': '{alphabet[i][1]}'"
+
+    file.write(f'{line[1:]}')
