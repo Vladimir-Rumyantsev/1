@@ -71,22 +71,23 @@ class LinkedList:
         return data
 
 
-stack = LinkedList()
-print(f'\nStack: {stack}\nlen: {len(stack)}')
-
-stack.add(1)
-print(f'\nStack: {stack}\nlen: {len(stack)}')
-
-stack.add(2)
-print(f'\nStack: {stack}\nlen: {len(stack)}')
-
-stack.add(3)
-print(f'\nStack: {stack}\nlen: {len(stack)}')
-
-stack.pop()
-print(f'\nStack: {stack}\nlen: {len(stack)}')
-
-amount = 0
-for item in stack:
-    amount += item
-print(f'\nThe amount: {amount}')
+if __name__ == '__main__':
+    stack = LinkedList()
+    print(f'\nStack: {stack}\nlen: {len(stack)}')
+    
+    stack.add(1)
+    print(f'\nStack: {stack}\nlen: {len(stack)}')
+    
+    stack.add(2)
+    print(f'\nStack: {stack}\nlen: {len(stack)}')
+    
+    stack.add(3)
+    print(f'\nStack: {stack}\nlen: {len(stack)}')
+    
+    stack.pop()
+    print(f'\nStack: {stack}\nlen: {len(stack)}')
+    
+    amount = 0
+    for item in stack:
+        amount += item
+    print(f'\nThe amount: {amount}')
