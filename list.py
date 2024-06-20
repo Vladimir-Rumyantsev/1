@@ -55,12 +55,12 @@ class LinkedList:
     def pop(self, index=-1):
         if index < 0:
             index += len(self)
+        if (self.head is None) or (index < 0):
+            raise IndexError("Индекс выходит за пределы списка")
         if index == 0:
             data = self.head.data
             self.head = self.head.next
             return data
-        if (self.head is None) or (index < 0):
-            raise IndexError("Индекс выходит за пределы списка")
         current = self.head
         for i in range(index - 1):
             current = current.next
@@ -74,19 +74,19 @@ class LinkedList:
 if __name__ == '__main__':
     stack = LinkedList()
     print(f'\nStack: {stack}\nlen: {len(stack)}')
-    
+
     stack.add(1)
     print(f'\nStack: {stack}\nlen: {len(stack)}')
-    
+
     stack.add(2)
     print(f'\nStack: {stack}\nlen: {len(stack)}')
-    
+
     stack.add(3)
     print(f'\nStack: {stack}\nlen: {len(stack)}')
-    
+
     stack.pop()
     print(f'\nStack: {stack}\nlen: {len(stack)}')
-    
+
     amount = 0
     for item in stack:
         amount += item
